@@ -6,14 +6,16 @@ import '../../features/auth/presentation/providers/auth_providers.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
-import '../../features/home/presentation/screens/salon_owner_home_screen.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
 import '../../features/auth/presentation/screens/splash_screen.dart';
 import '../../features/onboarding/presentation/screens/onboarding_screen.dart';
-
-
-
+import '../../features/booking/presentation/screens/booking_screen.dart';
+import '../../features/search/presentation/screens/search_screen.dart';
+import '../../features/salon_details/presentation/screens/salon_details_screen.dart';
+import '../../features/reviews/presentation/screens/review_screen.dart';
+import '../../features/loyalty/presentation/screens/loyalty_screen.dart';
+import '../role/role_router.dart';
 
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -34,7 +36,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       }
 
       if (isOnboarding) {
-        if (isLoggedIn) return '/home';
+        if (isLoggedIn) return '/role';
         return null;
       }
 
@@ -43,7 +45,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       }
 
       if (isLoggedIn && isLoggingIn) {
-        return '/home';
+        return '/role';
       }
 
       return null;
@@ -70,8 +72,43 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const HomeScreen(),
       ),
       GoRoute(
+        path: '/booking',
+        builder: (context, state) => const BookingScreen(),
+      ),
+      GoRoute(
+        path: '/search',
+        builder: (context, state) => const SearchScreen(),
+      ),
+      GoRoute(
+        path: '/salon-details/:id',
+        builder: (context, state) {
+          final salonId = state.pathParameters['id'] ?? '';
+          return SalonDetailsScreen(salonId: salonId);
+        },
+      ),
+      GoRoute(
+        path: '/review/:bookingId/:salonName',
+        builder: (context, state) {
+          final bookingId = state.pathParameters['bookingId'] ?? '';
+          final salonName = state.pathParameters['salonName'] ?? '';
+          return ReviewScreen(
+            bookingId: bookingId,
+            salonName: salonName,
+          );
+        },
+      ),
+      GoRoute(
+        path: '/loyalty',
+        builder: (context, state) => const LoyaltyScreen(),
+      ),
+      GoRoute(
+        path: '/role',
+        builder: (context, state) => const RoleRouter(),
+      ),
+      // Legacy route redirect - redirect old salon-owner-home to role router
+      GoRoute(
         path: '/salon-owner-home',
-        builder: (context, state) => const SalonOwnerHomeScreen(),
+        redirect: (context, state) => '/role',
       ),
       GoRoute(
         path: '/profile',

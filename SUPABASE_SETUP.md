@@ -59,8 +59,10 @@ This will:
 
 The app uses the `role` field from the `profiles` table to determine which screen to show after login:
 
-- `customer` → `/home` (Customer Home Screen)
-- `salon_owner` → `/salon-owner-home` (Salon Owner Dashboard)
+- `customer` → `/role` → Customer Home Screen (via RoleRouter)
+- `salon_owner` → `/role` → Salon Owner Dashboard (via RoleRouter)
+
+The `/role` route uses `RoleRouter` to automatically determine which dashboard to show based on the user's role. The old `/salon-owner-home` route is automatically redirected to `/role` for backward compatibility.
 
 ## 6. Database Structure
 

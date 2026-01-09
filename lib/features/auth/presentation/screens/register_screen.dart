@@ -60,7 +60,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
     ref.listen(authProvider, (previous, next) {
       if (next.isAuthenticated) {
-        context.go('/home');
+        // Navigate to role router which will decide customer vs owner dashboard
+        context.go('/role');
       }
       if (next.error != null) {
         ScaffoldMessenger.of(context).showSnackBar(

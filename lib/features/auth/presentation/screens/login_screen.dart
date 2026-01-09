@@ -39,7 +39,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
     ref.listen(authProvider, (previous, next) {
       if (next.isAuthenticated) {
-        context.go('/home');
+        // Navigate to role router which will decide customer vs owner dashboard
+        context.go('/role');
       }
       if (next.error != null) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -186,18 +187,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               _emailController.text.trim(),
                               _passwordController.text,
                             );
-                            
-                            // Navigate based on role after login
-                            if (mounted) {
-                              final user = ref.read(authProvider).user;
-                              if (user != null) {
-                                if (user.role == 'salon_owner') {
-                                  context.go('/salon-owner-home');
-                                } else {
-                                  context.go('/home');
-                                }
-                              }
-                            }
+                            // Navigation is handled by the ref.listen above
+                            // which redirects to /role, and RoleRouter decides the dashboard
                           }
                         },
                         style: ElevatedButton.styleFrom(

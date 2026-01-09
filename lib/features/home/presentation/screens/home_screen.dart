@@ -18,11 +18,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     setState(() {
       _selectedIndex = index;
     });
-    // Handle navigation if needed, or simple tab switching
-    if (index == 2) { // Profile
+    // Handle navigation
+    if (index == 1) { // Booking
+      context.push('/booking');
+    } else if (index == 2) { // Profile
        context.push('/profile');
     }
-    // Booking tab logic can go here
   }
 
   @override
@@ -77,26 +78,33 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               const SizedBox(height: 20),
 
               // Search Bar
-              TextField(
-                decoration: InputDecoration(
-                  hintText: 'Search service',
-                  hintStyle: GoogleFonts.inter(color: Colors.grey.shade400),
-                  prefixIcon: Icon(Icons.search, color: Colors.grey.shade400),
-                  filled: true,
-                  fillColor: Colors.grey.shade50,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Colors.grey.shade200),
+              GestureDetector(
+                onTap: () {
+                  context.push('/search');
+                },
+                child: AbsorbPointer(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Search service',
+                      hintStyle: GoogleFonts.inter(color: Colors.grey.shade400),
+                      prefixIcon: Icon(Icons.search, color: Colors.grey.shade400),
+                      filled: true,
+                      fillColor: Colors.grey.shade50,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(color: Colors.grey.shade200),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(color: Colors.grey.shade200),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: primaryColor),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(vertical: 0),
+                    ),
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Colors.grey.shade200),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: primaryColor),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(vertical: 0),
                 ),
               ),
               const SizedBox(height: 30),

@@ -68,7 +68,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> with SingleTickerPr
     if (mounted) {
       final authState = ref.read(authProvider);
       if (authState.isAuthenticated) {
-        context.go('/home');
+        // Navigate to role router which will decide customer vs owner dashboard
+        context.go('/role');
       } else {
         context.go('/onboarding');
       }
